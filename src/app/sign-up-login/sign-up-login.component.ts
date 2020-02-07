@@ -17,7 +17,7 @@ password:''}
   }
   async authenticate(){
   
-      await this.authService.signup()
+      await this.authService.signup(this.user.username, this.user.password)
       await this.authService.login(this.user);
     }
 
