@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from '../api.service';
+import { JsonPipe } from '@angular/common';
 
 
 @Injectable({
@@ -22,13 +23,21 @@ export class AuthServiceService {
   }
  
   async login(data){
-    await this.apiService.post('auth/signup', data);
-    const response= await this.apiService.post("auth/login", data );
+   const jsondata=JSON.stringify(data);
+    await this.apiService.post('auth/login', jsondata);
+    const response= await this.apiService.post("auth/login", jsondata );
     this.token= response.token;
     localStorage.setItem('token',this.token)
     console.log(this.token);
   }
   getToken(){
     return this.token;
+  }
+  isAuthorized(){
+    if(this.token!= undefined){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
